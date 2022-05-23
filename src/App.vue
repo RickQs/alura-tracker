@@ -7,6 +7,9 @@
       <FormularioTarefa @ao-salvar-tarefa="salvarTarefa"/>
       <div class="lista">
         <ATarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa"/>
+        <MensagemBox v-if="listaEstaVazia">
+          Nenhuma tarefa registrada.
+        </MensagemBox>
       </div>
     </div>
   </main>
@@ -18,6 +21,7 @@ import BarraLateral from './components/BarraLateral.vue';
 import FormularioTarefa from './components/FormularioTarefa.vue';
 import ATarefa from './components/ATarefa.vue';
 import ITarefa from './interfaces/ITarefa'
+import MensagemBox from './components/MensagemBox.vue';
 
 export default defineComponent({
   name: "App",
@@ -26,12 +30,17 @@ export default defineComponent({
       tarefas: [] as ITarefa[]
     }
   },
+  computed: {
+    listaEstaVazia () : boolean {
+      return this.tarefas.length === 0
+    }
+  },
   methods: {
     salvarTarefa (tarefa: ITarefa) : void {
       this.tarefas.push(tarefa)
     }
   },
-  components: { BarraLateral, FormularioTarefa, ATarefa }
+  components: { BarraLateral, FormularioTarefa, ATarefa, MensagemBox }
 });
 </script>
 
